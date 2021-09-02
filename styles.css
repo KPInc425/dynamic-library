@@ -12,9 +12,13 @@ body {
     /* add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     transition: 0.3s;
-    width: 23vw;
     margin: 5px;
     background-color: white;
+}
+
+.cardWidth {
+    min-width: 23vw;
+    max-width: 23vw;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -41,3 +45,21 @@ body {
     margin-bottom: 15px;
 }
 
+#newBookForm {
+    /*visibility: hidden;*/
+    display: none;
+    position: fixed;
+    top: 10%;
+    right: 37%;
+    /* z-index: 10; */
+    background-color: grey;
+    min-width: 25%;
+    text-align: center;
+    margin-top: 10%;
+    padding: 25px 0 25px 0;
+
+}
+
+.addBookButton {
+    margin-top: 25px;
+}
