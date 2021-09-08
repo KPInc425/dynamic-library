@@ -41,6 +41,7 @@ body {
 .cardWidth {
     min-width: 23vw;
     max-width: 23vw;
+    flex: 1;
 }
 
 /* On mouse-over, add a deeper shadow */
@@ -128,9 +129,12 @@ label {
 #copyRight {
     position: absolute;
     margin: 0 0 20px 0;
+    width: 300px;
     font-weight: 400;
     bottom: 0;
-    left: 41%;
+    left: 50%;
+    /* good if you don't know the div width */
+    transform: translate(-50%, -50%);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
