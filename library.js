@@ -107,33 +107,60 @@ function addNewBook(library) {
     document.querySelector(".addBookButton").onclick = function() {
         const inputAuthor = document.querySelector("#Author").value;
         const inputTitle = document.querySelector("#Title").value;
-        const inputPages = document.querySelector("#Pages").value;
-        const inputRead = document.querySelector("#Read").value;
-        console.log(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
-        //alert(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
-        const newBook = {
-            author: inputAuthor,
-            title: inputTitle,
-            pages: inputPages,
-            read: inputRead,
+        let inputPages = document.querySelector("#Pages").value;
+        let inputRead = document.querySelector("#Read").value.toUpperCase();
+        // inputRead = inputRead.toUpperCase();
+        //alert(inputRead);
+        inputPages = Number(inputPages);
+
+
+        if (inputAuthor == "") {
+            alert("Please enter an Author.");
+        } else if (inputTitle == "") {
+            alert("Please enter a Title.");
+        } else if (isNaN(inputPages) || inputPages == "") {
+            alert("Please enter a NUMBER of pages.");
+        } else {
+            let finalCheck = 0;
+            if (inputRead == "Y" || inputRead == "YES" || inputRead == "TRUE") {
+                inputRead = true;
+                finalCheck = 1;
+            } else if (inputRead == "NO" || inputRead == "N" || inputRead == "FALSE") {
+                inputRead = false;
+                finalCheck = 1;
+            } else {
+                alert("Please enter if READ. Yes or No."); 
+            } 
+            if (finalCheck == 1) {
+                console.log(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
+                //alert(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
+                const newBook = {
+                    author: inputAuthor,
+                    title: inputTitle,
+                    pages: inputPages,
+                    read: inputRead,
+                }
+                // Reset text Boxes
+                document.querySelector("#Author").value = "";
+                document.querySelector("#Title").value = "";
+                document.querySelector("#Pages").value = "";
+                document.querySelector("#Read").value = "";
+                // Hide form again
+                const newBookForm = document.getElementById('newBookForm');
+                newBookForm.style.display = "none";
+                // add new book
+                library.push(newBook);
+                // clear space for new library
+                libraryContainer.innerHTML = "";
+                displayLibraryBooks(library);
+                addEventListenerRemoveButton(library);
+                addEventListenerChangeReadStatus(library);
+                localStorage.clear();
+                populateStorage(library);
+            }
+            
         }
-        // Reset text Boxes
-        document.querySelector("#Author").value = "";
-        document.querySelector("#Title").value = "";
-        document.querySelector("#Pages").value = "";
-        document.querySelector("#Read").value = "";
-        // Hide form again
-        const newBookForm = document.getElementById('newBookForm');
-        newBookForm.style.display = "none";
-        // add new book
-        library.push(newBook);
-        // clear space for new library
-        libraryContainer.innerHTML = "";
-        displayLibraryBooks(library);
-        addEventListenerRemoveButton(library);
-        addEventListenerChangeReadStatus(library);
-        localStorage.clear();
-        populateStorage(library);
+        
 
     };
 }
