@@ -38,7 +38,7 @@ if(localStorage.length > 0) {
         },
     ];
     populateStorage(myLibrary);
-    console.log("IF/ELSE")
+    // console.log("IF/ELSE")
 }
 
 // Ref main library container

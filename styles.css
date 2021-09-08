@@ -1,14 +1,16 @@
 #newBookLabel {
     font-size: xx-large;
+    color: teal;
 }
 
 header {
     background-color: whitesmoke;
-    height: 6vh;
+    height: 5vh;
     text-align: center;
-    padding-top: 30px;
-    font-size: xx-large;
+    padding: 20px 0 10px 0;
+    font-size: 4vh;
     box-shadow: 0 0 8px 0 teal;
+    color: teal;
 }
 
 body {
@@ -33,6 +35,7 @@ body {
     background-color: whitesmoke;
     border-radius: 8px;
     word-wrap: break-word;
+    /* color: teal; */
 }
 
 .cardWidth {
@@ -43,6 +46,7 @@ body {
 /* On mouse-over, add a deeper shadow */
 .card:hover {
     box-shadow: 0 8px 16px 0 teal;
+    background-color: rgb(227, 255, 249);
 }
 
 .bookInfoContainer {
@@ -108,6 +112,9 @@ button:hover, .addBookButton:hover {
 
 input {
     margin: 12px;
+    text-align: center;
+    height: 35px;
+    font-weight: 700;
 }
 
 label {
@@ -116,4 +123,17 @@ label {
 
 .buttonRemoveBook:hover {
     background-color: tomato;
+}
+
+#copyRight {
+    position: absolute;
+    margin: 0 0 20px 0;
+    font-weight: 400;
+    bottom: 0;
+    left: 41%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.strokeEffect {
+    -webkit-text-stroke: 2px black;
 }
