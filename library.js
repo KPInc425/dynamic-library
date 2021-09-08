@@ -1,48 +1,56 @@
+//let testing = 0;
+let myLibrary = [];
+
 if (storageAvailable('localStorage')) {
     console.log("Local Storage is Available");
 } else {
     console.log("No Local Storage Available.");
 }
 
-let myLibrary = [
-    {
-        author: "Jim Mortimore",
-        title: `"Babylon 5": Clark's Law`,
-        pages: 279,
-        read: false,
-    },
-    {
-        author: "Karen Miller",
-        title: "A Blight of Mages",
-        pages: 640,
-        read: false,
-    },
-    {
-        author: "Kim Harrison",
-        title: "A Fistful of Charms",
-        pages: 544,
-        read: false,
-    },
-    {
-        author: "Lois Lowry",
-        title: "The Giver",
-        pages: 180,
-        read: true,
-    },
-];
+if(localStorage.length > 0) {
+    // If storage IS already populated
+    myLibrary = setLibrary();
+    //console.log("if localStorage.length > 0");
+} else {
+    // If storage is NOT already populated
+    myLibrary = [
+        {
+            author: "Jim Mortimore",
+            title: `"Babylon 5": Clark's Law`,
+            pages: 279,
+            read: false,
+        },
+        {
+            author: "Karen Miller",
+            title: "A Blight of Mages",
+            pages: 640,
+            read: false,
+        },
+        {
+            author: "Kim Harrison",
+            title: "A Fistful of Charms",
+            pages: 544,
+            read: false,
+        },
+        {
+            author: "Lois Lowry",
+            title: "The Giver",
+            pages: 180,
+            read: true,
+        },
+    ];
+    populateStorage(myLibrary);
+    console.log("IF/ELSE")
+}
 
 // Ref main library container
 const libraryContainer = document.querySelector('#cardContainer');
 displayLibraryBooks(myLibrary);
-// addNewBook(myLibrary);
+
 addEventListenerRemoveButton(myLibrary);
 addEventListenerChangeReadStatus(myLibrary);
 displayAddBookForm(myLibrary);
 
-
-function Book() {
-    // the constructor
-}
 
 function displayLibraryBooks(library) {
     let i = 0;
@@ -127,48 +135,11 @@ function addNewBook(library) {
         displayLibraryBooks(library);
         addEventListenerRemoveButton(library);
         addEventListenerChangeReadStatus(library);
+        localStorage.clear();
+        populateStorage(library);
 
     };
 }
-
-// function addNewBook(library) {
-//     document.getElementById("newBook").onclick = function() {
-//         // I should likely rewrite this into a form that will show when clicked.
-//         alert("You are about to input a new Book into the Library.")
-//         newBookAuthor = prompt("Who is the Author?");
-//         if (newBookAuthor == "" || newBookAuthor == null) {
-//             // You can just click okay again, need to find recourse for this
-//             prompt("Who is the Author?");
-//         }
-//         newBookTitle = prompt("What is the Title of New Book?");
-//         if (newBookAuthor == "" || newBookAuthor == null) {
-//             prompt("What is the Title of New Book?");
-//         }
-//         newBookPages = prompt("How many pages?");
-//         newBookPages = Number(newBookPages);
-//         if (typeof newBookPages !=  'number') {
-//             prompt("How many Pages?")
-//         }
-//         newBookRead = Boolean(prompt("Has the new book been read? true or false."));
-//         // This doesn't quite work either
-//         if (typeof newBookReady != 'boolean') {
-//             prompt("Has the new book been read?");
-//         }
-//         console.log(newBookAuthor + " " + newBookTitle + " " + newBookPages + " " + newBookRead)
-//         newBook = {
-//             author: newBookAuthor,
-//             title: newBookTitle,
-//             pages: newBookPages,
-//             read: newBookRead,
-//         }
-//         library.push(newBook);
-//         // Remove library html to replace all cards rather than append
-//         libraryContainer.innerHTML = "";
-//         displayLibraryBooks(library);
-//         addEventListenerRemoveButton(library);
-//         addEventListenerChangeReadStatus(library);
-//     };
-// }
 
 function removeBookFromLibrary(library, index) {
     // Remove object from array
@@ -177,6 +148,8 @@ function removeBookFromLibrary(library, index) {
     displayLibraryBooks(library);
     addEventListenerRemoveButton(library);
     addEventListenerChangeReadStatus(library);
+    localStorage.clear();
+    populateStorage(library);
     
 }
 
@@ -218,6 +191,8 @@ function changeBookReadStatus(library, index) {
     displayLibraryBooks(library);
     addEventListenerChangeReadStatus(library);
     addEventListenerRemoveButton(library);
+    localStorage.clear();
+    populateStorage(library);
     
 }
 
@@ -244,4 +219,36 @@ function storageAvailable(type) {
             // Acknoledge QuotaExceededError only if there's somethign alread stored 
             (storage && storage.length !== 0);
     }
+}
+
+function populateStorage(library) {
+    let index = 0;
+    for (let book of library) {
+        //console.log(book);
+        localStorage.setItem(`localLibrary[${index}]`, JSON.stringify(book));
+        index++;
+    }
+    
+    setLibrary();
+    //console.log("POPULATESTORAGE")
+}
+
+
+
+function setLibrary() {
+    // let index = 0;
+    let library = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        let tmpArr = JSON.parse(localStorage.getItem(`localLibrary[${i}]`));
+        library.push(tmpArr);
+    }
+    //console.log(library);
+    // TESTING
+    //console.log("setLibraryCount:" + " " + testing);
+    //testing++; 
+    return library;
+
+    // displayLibraryBooks(library); // CAUSE INFINITE LOOP
+    // NEED TO RETURN LOCAL STORAGE LIBRARY FOR DISPLAYING.
+    // need to return library so it can be populated with display
 }
