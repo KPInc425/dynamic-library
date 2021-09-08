@@ -1,5 +1,20 @@
+#newBookLabel {
+    font-size: xx-large;
+}
+
+header {
+    background-color: whitesmoke;
+    height: 6vh;
+    text-align: center;
+    padding-top: 30px;
+    font-size: xx-large;
+    box-shadow: 0 0 8px 0 teal;
+}
+
 body {
-    background-color: grey;
+    background-color: rgb(88, 88, 88);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(14, 14, 14);
 }
 #cardContainer {
     display: flex;
@@ -7,13 +22,16 @@ body {
     flex-wrap: wrap;
     justify-content: space-evenly;
     line-height: 1.6;
+    margin-top: 15px;
+    font-weight: 800;
 }
 .card {
     /* add shadows to create the "card" effect */
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 teal;
     transition: 0.3s;
     margin: 5px;
-    background-color: white;
+    background-color: whitesmoke;
+    border-radius: 8px;
 }
 
 .cardWidth {
@@ -23,7 +41,7 @@ body {
 
 /* On mouse-over, add a deeper shadow */
 .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 teal;
 }
 
 .bookInfoContainer {
@@ -35,6 +53,15 @@ body {
 
 #newBook {
     margin-top: 15px;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: 600;
+    border: 1px solid black;
+}
+
+#newBook:hover {
+    background-color: rgb(1, 68, 155);
+    color: white;
 }
 
 .center {
@@ -52,7 +79,7 @@ body {
     top: 10%;
     right: 37%;
     /* z-index: 10; */
-    background-color: grey;
+    background-color: rgb(88, 88, 88);
     min-width: 25%;
     text-align: center;
     margin-top: 10%;
@@ -62,4 +89,30 @@ body {
 
 .addBookButton {
     margin-top: 25px;
+}
+
+button, .addBookButton {
+    border-radius: 12px;
+    padding: 10px;
+    margin: 10px;
+    font-weight: 600;
+    background-color: white;
+    border: 1px solid black;
+}
+
+button:hover, .addBookButton:hover {
+    background-color: teal;
+    color: white;
+}
+
+input {
+    margin: 12px;
+}
+
+label {
+    font-weight: 700;
+}
+
+.buttonRemoveBook:hover {
+    background-color: tomato;
 }

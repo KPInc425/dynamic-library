@@ -1,4 +1,3 @@
-//let testing = 0;
 let myLibrary = [];
 
 if (storageAvailable('localStorage')) {
@@ -10,7 +9,6 @@ if (storageAvailable('localStorage')) {
 if(localStorage.length > 0) {
     // If storage IS already populated
     myLibrary = setLibrary();
-    //console.log("if localStorage.length > 0");
 } else {
     // If storage is NOT already populated
     myLibrary = [
@@ -75,6 +73,7 @@ function displayLibraryBooks(library) {
         bookCardRemoveButton.classList.add("buttonRemoveBook");
         bookCardRemoveButton.setAttribute("value", "Remove Book");
         bookCardRemoveButton.textContent = "Remove Book";
+        bookCardRemoveButton.setAttribute("data-index", i);
         // add button to change READ status of book 
         const bookCardChangeReadStatusButton = document.createElement('button');
         bookCardChangeReadStatusButton.classList.add("buttonChangeReadStatus");
@@ -98,10 +97,8 @@ function displayLibraryBooks(library) {
 function displayAddBookForm(library) {
     // ref the newBook button
     document.getElementById('newBook').onclick = function() {
-        // alert("click");
         const newBookForm = document.getElementById('newBookForm');
         newBookForm.style.display = "block";
-        // alert(newBookForm.style.display)
         addNewBook(library);
     }
 }
@@ -113,7 +110,7 @@ function addNewBook(library) {
         const inputPages = document.querySelector("#Pages").value;
         const inputRead = document.querySelector("#Read").value;
         console.log(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
-        alert(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
+        //alert(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
         const newBook = {
             author: inputAuthor,
             title: inputTitle,
@@ -143,6 +140,7 @@ function addNewBook(library) {
 
 function removeBookFromLibrary(library, index) {
     // Remove object from array
+    console.log(index);
     library.splice(index, 1); 
     libraryContainer.innerHTML = "";
     displayLibraryBooks(library);
@@ -160,6 +158,7 @@ function addEventListenerRemoveButton(library) {
         div.addEventListener("click", function () {
             //get Index from data-*
             let index = div.getAttribute('data-index');
+            console.log(index);
             removeBookFromLibrary(library, index); 
         })
     })
@@ -171,9 +170,7 @@ function addEventListenerChangeReadStatus(library) {
         // Click to get index and change READ status
         div.addEventListener("click", function(){
             // get Index from data-* 
-            // alert("TESTING");
             let index = div.getAttribute('data-index');
-            // alert(index);
             changeBookReadStatus(library, index);
         })
     })
@@ -181,7 +178,6 @@ function addEventListenerChangeReadStatus(library) {
 
 function changeBookReadStatus(library, index) {
     // Change Book READ status 
-    // alert(index);
     if (library[index].read == true) {
         library[index].read = false;
     } else {
@@ -228,27 +224,14 @@ function populateStorage(library) {
         localStorage.setItem(`localLibrary[${index}]`, JSON.stringify(book));
         index++;
     }
-    
     setLibrary();
-    //console.log("POPULATESTORAGE")
 }
 
-
-
 function setLibrary() {
-    // let index = 0;
     let library = [];
     for (let i = 0; i < localStorage.length; i++) {
         let tmpArr = JSON.parse(localStorage.getItem(`localLibrary[${i}]`));
         library.push(tmpArr);
     }
-    //console.log(library);
-    // TESTING
-    //console.log("setLibraryCount:" + " " + testing);
-    //testing++; 
     return library;
-
-    // displayLibraryBooks(library); // CAUSE INFINITE LOOP
-    // NEED TO RETURN LOCAL STORAGE LIBRARY FOR DISPLAYING.
-    // need to return library so it can be populated with display
 }
