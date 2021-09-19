@@ -1,4 +1,36 @@
+class Book {
+    constructor(author,title,pages,read) {
+        this.author = author;
+        this.title = title;
+        this.pages = pages;
+        this.read = read;
+        let didIRead = "";
+
+        this.info = function() {
+            if (this.read === true) {
+                didIRead = "You have read this.";
+            } else {
+                didIRead = "Has not been read yet.";
+            }
+            let infoString = `${this.title} 
+                              by 
+                              ${this.author}
+    
+                              ${this.pages} pages
+    
+                              ${didIRead}`;
+            return infoString;
+        };
+    }
+}
+
+const defaultOne = new Book("Jim Mortimore",`"Babylon 5": Clark's Law`,279,false);
+const defaultTwo = new Book("Karen Miller","A Blight of Mages",640,false);
+const defaultThree = new Book("Kim Harrison","A Fistful of Charms",544,false);
+const defaultFour = new Book("Lois Lowry","The Giver",180,true);
+
 let myLibrary = [];
+
 
 if (storageAvailable('localStorage')) {
     console.log("Local Storage is Available");
@@ -11,32 +43,7 @@ if(localStorage.length > 0) {
     myLibrary = setLibrary();
 } else {
     // If storage is NOT already populated
-    myLibrary = [
-        {
-            author: "Jim Mortimore",
-            title: `"Babylon 5": Clark's Law`,
-            pages: 279,
-            read: false,
-        },
-        {
-            author: "Karen Miller",
-            title: "A Blight of Mages",
-            pages: 640,
-            read: false,
-        },
-        {
-            author: "Kim Harrison",
-            title: "A Fistful of Charms",
-            pages: 544,
-            read: false,
-        },
-        {
-            author: "Lois Lowry",
-            title: "The Giver",
-            pages: 180,
-            read: true,
-        },
-    ];
+    myLibrary = [defaultOne, defaultTwo, defaultThree, defaultFour];
     populateStorage(myLibrary);
     // console.log("IF/ELSE")
 }
@@ -49,21 +56,24 @@ addEventListenerRemoveButton(myLibrary);
 addEventListenerChangeReadStatus(myLibrary);
 displayAddBookForm(myLibrary);
 
-
 function displayLibraryBooks(library) {
     let i = 0;
     // Loop through array 
     for (let book of library) {
-        
-
+    
         // display book
-        let bookInfo = `:Author:\r\n ${book.author} 
-                        \r\n:Title:\r\n ${book.title} 
-                        \r\n:Pages:\r\n ${book.pages}
-                        \r\n?Read?\r\n ${book.read}`;
+        // console.log(book.info());
+        let bookInfo = book.info();
+        // let bookInfo = `:Author:\r\n ${book.author} 
+        //                 \r\n:Title:\r\n ${book.title} 
+        //                 \r\n:Pages:\r\n ${book.pages}
+        //                 \r\n?Read?\r\n ${book.read}`;
         const bookCard = document.createElement('div');
         bookCard.classList.add("card");
         bookCard.classList.add("cardWidth");
+        if (book.read === true) {
+            bookCard.classList.add("readBook");
+        }
         bookCard.setAttribute("data-index", i);
         const bookCardInfo = document.createElement('div');
         bookCardInfo.classList.add("bookInfoContainer");
@@ -82,10 +92,6 @@ function displayLibraryBooks(library) {
         // Added this to make the changeReadStatusButton work, it seems it wouldn't 
         // read the data-* from the bookCard like the remove button would.
         bookCardChangeReadStatusButton.setAttribute("data-index", i);
-
-        
-
-
         bookCard.appendChild(bookCardInfo);
         bookCard.appendChild(bookCardRemoveButton);
         bookCard.appendChild(bookCardChangeReadStatusButton);
@@ -102,6 +108,7 @@ function displayAddBookForm(library) {
         addNewBook(library);
     }
 }
+
 
 function addNewBook(library) {
     document.querySelector(".addBookButton").onclick = function() {
@@ -132,14 +139,10 @@ function addNewBook(library) {
                 alert("Please enter if READ. Yes or No."); 
             } 
             if (finalCheck == 1) {
-                console.log(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
+                // console.log(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
                 //alert(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
-                const newBook = {
-                    author: inputAuthor,
-                    title: inputTitle,
-                    pages: inputPages,
-                    read: inputRead,
-                }
+                const newBook = new Book(inputAuthor,inputTitle,inputPages,inputRead);
+                // console.log(newBook);
                 // Reset text Boxes
                 document.querySelector("#Author").value = "";
                 document.querySelector("#Title").value = "";
@@ -167,7 +170,7 @@ function addNewBook(library) {
 
 function removeBookFromLibrary(library, index) {
     // Remove object from array
-    console.log(index);
+    // console.log(index);
     library.splice(index, 1); 
     libraryContainer.innerHTML = "";
     displayLibraryBooks(library);
@@ -185,7 +188,7 @@ function addEventListenerRemoveButton(library) {
         div.addEventListener("click", function () {
             //get Index from data-*
             let index = div.getAttribute('data-index');
-            console.log(index);
+            // console.log(index);
             removeBookFromLibrary(library, index); 
         })
     })
@@ -260,5 +263,13 @@ function setLibrary() {
         let tmpArr = JSON.parse(localStorage.getItem(`localLibrary[${i}]`));
         library.push(tmpArr);
     }
+    // console.log(library);
+    let index = 0;
+    let tmpArr = [];
+    library.forEach((item) => {
+        tmpArr[index] =  new Book(item.author, item.title, item.pages, item.read);
+        index++;
+    });
+    library = tmpArr;
     return library;
 }

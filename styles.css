@@ -57,14 +57,6 @@ body {
     white-space: pre-line;
 }
 
-#newBook {
-    margin-top: 15px;
-    border-radius: 12px;
-    padding: 10px;
-    font-weight: 600;
-    border: 1px solid black;
-}
-
 #newBook:hover {
     background-color: rgb(1, 68, 155);
     color: white;
@@ -126,18 +118,31 @@ label {
     background-color: tomato;
 }
 
+#newBook {
+    margin: auto;
+    margin-top: 15px;
+    border-radius: 12px;
+    padding: 10px;
+    font-weight: 600;
+    border: 1px solid black;
+    width: 25vw;
+}
+
 #copyRight {
-    position: absolute;
-    margin: 0 0 20px 0;
-    width: 300px;
     font-weight: 400;
-    bottom: 0;
-    left: 50%;
-    /* good if you don't know the div width */
-    transform: translate(-50%, -50%);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 20px;
+}
+
+footer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .strokeEffect {
     -webkit-text-stroke: 2px black;
+}
+
+.readBook {
+    background-color: rgba(0, 255, 255, 0.5);
 }
