@@ -13,25 +13,30 @@
         <main id="cardContainer" class="center">
             
         </main>
-        <form id="newBookForm" class="card">
+        <form id="newBookForm" class="card" novalidate>
             <p><h1 id="newBookLabel" class="strokeEffect">Add New Book</h1></p>
             <br>
-            <label value="Author">Author</label>
+            <label value="Author" for="Author">Author</label>
             <br>
-            <input id="Author" type="text">
+            <input id="Author" name="Author" type="text" minLength="3" placeholder="Enter Author Name" required>
+            <span class="error" aria-live="polite"></span>
             <br>
-            <label value="Title">Title</label>
+            <label value="Title" for="Title">Title</label>
             <br>
-            <input id="Title" type="text">
+            <input id="Title" name="Title" type="text" minLength="3" required>
+            <span class="error" aria-live="polite"></span>
             <br>
-            <label value="Pages">Pages</label>
+            <label value="Pages" for="Pages">Pages</label>
             <br>
-            <input id="Pages" type="text">
+            <input id="Pages" name="Pages" type="number" min="1" required>
+            <span class="error" aria-live="polite"></span>
             <br>
-            <label value="Read">Read</label>
+            <label value="Read" for="Read">Read</label>
             <br>
-            <input id="Read" type="text">
+            <input id="Read" name="Read" type="text" pattern="[Yy]|[Nn]|[Yy][Ee][Ss]|[Nn][Oo]|[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]" required>
+            <span class="error" aria-live="polite"></span>
             <br>
+            <p>*All Field Required.</p> 
             <input type="button" class="addBookButton" value="Add Book">
         </form>
         <footer>

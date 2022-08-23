@@ -39,7 +39,7 @@ body {
 }
 
 .cardWidth {
-    min-width: 23vw;
+    min-width: 235px;
     max-width: 23vw;
     flex: 1;
 }
@@ -78,7 +78,8 @@ body {
     right: 37%;
     /* z-index: 10; */
     background-color: rgb(88, 88, 88);
-    min-width: 25%;
+    min-width: 250px;
+    width: 25%;
     text-align: center;
     margin-top: 10%;
     padding: 25px 0 25px 0;
@@ -108,6 +109,10 @@ input {
     text-align: center;
     height: 35px;
     font-weight: 700;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
 }
 
 label {
@@ -124,7 +129,6 @@ label {
     border-radius: 12px;
     padding: 10px;
     font-weight: 600;
-    border: 1px solid black;
     width: 25vw;
 }
 
@@ -145,4 +149,21 @@ footer {
 
 .readBook {
     background-color: rgba(0, 255, 255, 0.5);
+}
+
+input:invalid {
+    border: 1px dotted red;
+    /* background-image: linear-gradient(to right, white, pink); */
+}
+
+input:invalid:focus {
+    border: 2px solid red;
+    background-color: white;
+    background-image: none;
+}
+
+input:valid {
+    background-image: none;
+    background-color: teal;
+    color: white;
 }

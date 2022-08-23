@@ -110,7 +110,13 @@ function displayAddBookForm(library) {
 }
 
 
+
+
 function addNewBook(library) {
+
+    const newBookForm = document.getElementById('newBookForm');
+    console.log(newBookForm);
+
     document.querySelector(".addBookButton").onclick = function() {
         const inputAuthor = document.querySelector("#Author").value;
         const inputTitle = document.querySelector("#Title").value;
