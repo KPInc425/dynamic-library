@@ -106,17 +106,70 @@ function displayAddBookForm(library) {
         const newBookForm = document.getElementById('newBookForm');
         newBookForm.style.display = "block";
         addNewBook(library);
+        validateNewBookForm();
     }
 }
 
-
-
-
-function addNewBook(library) {
-
+function validateNewBookForm() {
     const newBookForm = document.getElementById('newBookForm');
     console.log(newBookForm);
 
+    // const elementNames = ['Author', 'Title', 'Pages', 'Read'];
+
+    const inputArray = [];
+    const inputErrorArray = [];
+
+    const inputAuthor = document.getElementById('Author');
+    const inputTitle = document.getElementById('Title');
+    const inputPages = document.getElementById('Pages');
+    const inputRead = document.getElementById('Read');
+
+    inputArray.push(inputAuthor);
+    inputArray.push(inputTitle);
+    inputArray.push(inputPages);
+    inputArray.push(inputRead);
+
+    const authorError = inputAuthor.nextElementSibling; //document.querySelector('#Author + span.error');
+    const titleError = inputTitle.nextElementSibling;   //document.querySelector('#Title + span.error');
+    const pagesError = document.querySelector('#Pages + span.error');
+    const readError = document.querySelector('#Read + span.error');
+
+    inputErrorArray.push(authorError);
+    inputErrorArray.push(titleError);
+    inputErrorArray.push(pagesError);
+    inputErrorArray.push(readError);
+
+    console.log(authorError);
+    console.log(titleError);
+    console.log(pagesError);
+    console.log(readError);
+
+    console.log(inputArray);
+    console.log(inputErrorArray);
+
+    function addEventListeners(inputArray, inputErrorArray) {
+        console.log(inputArray.length);
+        for (let i = 0; i < inputArray.length; i++) {
+            inputArray[i].addEventListener('input', (e) => {
+                if (inputArray[i].validity.valid) {
+                    inputErrorArray[i].textContent = '';
+                    inputErrorArray[i].className = 'error';
+                } else {
+                    showError();
+                }
+            });
+        }
+    }
+
+    addEventListeners(inputArray, inputErrorArray);
+
+    
+
+
+}
+
+
+function addNewBook(library) {
     document.querySelector(".addBookButton").onclick = function() {
         const inputAuthor = document.querySelector("#Author").value;
         const inputTitle = document.querySelector("#Title").value;
