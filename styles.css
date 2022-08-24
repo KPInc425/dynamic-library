@@ -105,7 +105,7 @@ button:hover, .addBookButton:hover {
 }
 
 input {
-    margin: 12px;
+    margin: 12px 12px 0 12px;
     text-align: center;
     height: 35px;
     font-weight: 700;
@@ -166,4 +166,19 @@ input:valid {
     background-image: none;
     background-color: teal;
     color: white;
+}
+
+.error {
+    font-size: 75%;
+    display: block;
+    max-width: 185px;
+    margin: auto;
+    color: white;
+    border-radius: 0 0 5px 5px;
+    box-sizing: border-box;
+}
+
+.error.active {
+    background-color: #900;
+    padding: 10px 0px;
 }

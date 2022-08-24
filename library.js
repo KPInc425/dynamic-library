@@ -100,19 +100,19 @@ function displayLibraryBooks(library) {
     }
 }
 
-function displayAddBookForm(library) {
+function displayAddBookForm() {
     // ref the newBook button
     document.getElementById('newBook').onclick = function() {
         const newBookForm = document.getElementById('newBookForm');
         newBookForm.style.display = "block";
-        addNewBook(library);
         validateNewBookForm();
+        // addNewBook(library);
     }
 }
 
 function validateNewBookForm() {
-    const newBookForm = document.getElementById('newBookForm');
-    console.log(newBookForm);
+    const addNewBookButton = document.querySelector('.addBookButton');
+    // console.log(newBookForm);
 
     // const elementNames = ['Author', 'Title', 'Pages', 'Read'];
 
@@ -139,23 +139,43 @@ function validateNewBookForm() {
     inputErrorArray.push(pagesError);
     inputErrorArray.push(readError);
 
-    console.log(authorError);
-    console.log(titleError);
-    console.log(pagesError);
-    console.log(readError);
+    // console.log(authorError);
+    // console.log(titleError);
+    // console.log(pagesError);
+    // console.log(readError);
 
-    console.log(inputArray);
-    console.log(inputErrorArray);
+    // console.log(inputArray);
+    // console.log(inputErrorArray);
 
-    function addEventListeners(inputArray, inputErrorArray) {
-        console.log(inputArray.length);
+    function showError(input, inputError){
+        // console.log(input);
+        if (input.validity.valueMissing) {
+            if (input.name === "Read") {
+                inputError.textContent = `You need to enter ${input.placeholder}`;
+            } else {
+                inputError.textContent = `You need to enter ${input.name}`;
+            }
+        } else if (input.validity.typeMismatch) {
+            inputError.textContent = `Entered value needs to be an ${input.type} value`;
+        } else if (input.validity.tooShort) {
+            inputError.textContent = `Value should be at least ${input.minLength} characters;
+            you entered ${input.value.length}`;
+        } else if (input.validity.rangeUnderflow) {
+            inputError.textContent = `Value for ${input.name} must be above ${input.min}`;
+        }
+
+        inputError.className = 'error active';
+    }
+
+    function addEventListeners() {
+        // console.log(inputArray.length);
         for (let i = 0; i < inputArray.length; i++) {
             inputArray[i].addEventListener('input', (e) => {
                 if (inputArray[i].validity.valid) {
                     inputErrorArray[i].textContent = '';
                     inputErrorArray[i].className = 'error';
                 } else {
-                    showError();
+                    showError(inputArray[i], inputErrorArray[i]);
                 }
             });
         }
@@ -163,68 +183,59 @@ function validateNewBookForm() {
 
     addEventListeners(inputArray, inputErrorArray);
 
-    
+    addNewBookButton.addEventListener('click', (e) =>{
+        e.stopPropagation();
+        // console.log(myLibrary);
+        // console.log("Submit!");
+        let validInputs = 0;
+        for (let i = 0; i < inputArray.length; i++) {
+            if (!inputArray[i].validity.valid) {
+                showError(inputArray[i], inputErrorArray[i]);
+                e.preventDefault();
+            } else {
+                validInputs++;
+            }
+        }
 
-
+        if (validInputs === inputArray.length) {
+            addNewBook();
+            return 1;
+        } else {
+            return 0;
+        }
+    })
 }
 
 
-function addNewBook(library) {
-    document.querySelector(".addBookButton").onclick = function() {
-        const inputAuthor = document.querySelector("#Author").value;
-        const inputTitle = document.querySelector("#Title").value;
-        let inputPages = document.querySelector("#Pages").value;
-        let inputRead = document.querySelector("#Read").value.toUpperCase();
-        // inputRead = inputRead.toUpperCase();
-        //alert(inputRead);
-        inputPages = Number(inputPages);
+function addNewBook() {
+    const inputAuthor = document.querySelector("#Author").value;
+    const inputTitle = document.querySelector("#Title").value;
+    let inputPages = document.querySelector("#Pages").value;
+    let inputRead = document.querySelector("#Read").value;
+    inputPages = Number(inputPages);
 
+    // console.log(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
+    //alert(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
+    const newBook = new Book(inputAuthor,inputTitle,inputPages,inputRead);
+    // console.log(newBook);
+    // Reset text Boxes
+    document.querySelector("#Author").value = "";
+    document.querySelector("#Title").value = "";
+    document.querySelector("#Pages").value = "";
+    document.querySelector("#Read").value = "";
+    // Hide form again
+    const newBookForm = document.getElementById('newBookForm');
+    newBookForm.style.display = "none";
+    // add new book
+    myLibrary.push(newBook);
+    // clear space for new library
+    libraryContainer.innerHTML = "";
+    displayLibraryBooks(myLibrary);
+    addEventListenerRemoveButton(myLibrary);
+    addEventListenerChangeReadStatus(myLibrary);
+    localStorage.clear();
+    populateStorage(myLibrary);
 
-        if (inputAuthor == "") {
-            alert("Please enter an Author.");
-        } else if (inputTitle == "") {
-            alert("Please enter a Title.");
-        } else if (isNaN(inputPages) || inputPages == "") {
-            alert("Please enter a NUMBER of pages.");
-        } else {
-            let finalCheck = 0;
-            if (inputRead == "Y" || inputRead == "YES" || inputRead == "TRUE") {
-                inputRead = true;
-                finalCheck = 1;
-            } else if (inputRead == "NO" || inputRead == "N" || inputRead == "FALSE") {
-                inputRead = false;
-                finalCheck = 1;
-            } else {
-                alert("Please enter if READ. Yes or No."); 
-            } 
-            if (finalCheck == 1) {
-                // console.log(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
-                //alert(`${inputAuthor} ${inputTitle} ${inputPages} ${inputRead}`)
-                const newBook = new Book(inputAuthor,inputTitle,inputPages,inputRead);
-                // console.log(newBook);
-                // Reset text Boxes
-                document.querySelector("#Author").value = "";
-                document.querySelector("#Title").value = "";
-                document.querySelector("#Pages").value = "";
-                document.querySelector("#Read").value = "";
-                // Hide form again
-                const newBookForm = document.getElementById('newBookForm');
-                newBookForm.style.display = "none";
-                // add new book
-                library.push(newBook);
-                // clear space for new library
-                libraryContainer.innerHTML = "";
-                displayLibraryBooks(library);
-                addEventListenerRemoveButton(library);
-                addEventListenerChangeReadStatus(library);
-                localStorage.clear();
-                populateStorage(library);
-            }
-            
-        }
-        
-
-    };
 }
 
 function removeBookFromLibrary(library, index) {
