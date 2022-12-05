@@ -31,14 +31,15 @@ const defaultFour = new Book("Lois Lowry","The Giver",180,true);
 
 let myLibrary = [];
 
-
-if (storageAvailable('localStorage')) {
+// This can likely be removed as we aren't using localStorage for demo purposes
+// Replace storage with some kind of backend
+if (storageAvailable('sessionStorage')) {
     console.log("Local Storage is Available");
 } else {
     console.log("No Local Storage Available.");
 }
 
-if(localStorage.length > 0) {
+if(sessionStorage.length > 0) {
     // If storage IS already populated
     myLibrary = setLibrary();
 } else {
@@ -233,7 +234,7 @@ function addNewBook() {
     displayLibraryBooks(myLibrary);
     addEventListenerRemoveButton(myLibrary);
     addEventListenerChangeReadStatus(myLibrary);
-    localStorage.clear();
+    sessionStorage.clear();
     populateStorage(myLibrary);
 
 }
@@ -246,7 +247,7 @@ function removeBookFromLibrary(library, index) {
     displayLibraryBooks(library);
     addEventListenerRemoveButton(library);
     addEventListenerChangeReadStatus(library);
-    localStorage.clear();
+    sessionStorage.clear();
     populateStorage(library);
     
 }
@@ -287,7 +288,7 @@ function changeBookReadStatus(library, index) {
     displayLibraryBooks(library);
     addEventListenerChangeReadStatus(library);
     addEventListenerRemoveButton(library);
-    localStorage.clear();
+    sessionStorage.clear();
     populateStorage(library);
     
 }
@@ -321,7 +322,7 @@ function populateStorage(library) {
     let index = 0;
     for (let book of library) {
         //console.log(book);
-        localStorage.setItem(`localLibrary[${index}]`, JSON.stringify(book));
+        sessionStorage.setItem(`localLibrary[${index}]`, JSON.stringify(book));
         index++;
     }
     setLibrary();
@@ -329,8 +330,8 @@ function populateStorage(library) {
 
 function setLibrary() {
     let library = [];
-    for (let i = 0; i < localStorage.length; i++) {
-        let tmpArr = JSON.parse(localStorage.getItem(`localLibrary[${i}]`));
+    for (let i = 0; i < sessionStorage.length; i++) {
+        let tmpArr = JSON.parse(sessionStorage.getItem(`localLibrary[${i}]`));
         library.push(tmpArr);
     }
     // console.log(library);

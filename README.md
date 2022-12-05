@@ -12,6 +12,5 @@ Implementing a dynamic webpage to hold a collectin of books. Ability to add/subt
 --Cancel form when clicking away from newBookForm as well
 -Add ability to add/remove catagories.
 -Add Statistics TotalBooks/TotalRead/TotalPages
--Add Delete localStorage Button
 -Add Sort function
 -Add ability to rename library
